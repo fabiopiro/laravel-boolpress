@@ -69,7 +69,6 @@
                 <div class="top-right links">
                     @auth
                         {{-- <a href="{{ url('/home') }}">Home</a> --}}
-                        {{-- Commentato! --}}
                         {{-- Nuova Homepage (da Autenticato) --}}
                         <a href="{{ route('admin.home') }}">Home</a>
                     @else
