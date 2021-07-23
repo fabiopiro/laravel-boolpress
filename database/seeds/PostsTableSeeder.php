@@ -31,8 +31,12 @@ class PostsTableSeeder extends Seeder
             // Salvataggio (a DB)
             $newPost->save();
 
-            //Esecuzione --- php artisan db:seed --class=PostsTableSeeder
-            //Verificare il DB
+            // Esecuzione --- php artisan db:seed --class=PostsTableSeeder
+            // Verificare il DB
+
+            // php artisan migrate:refresh --seed
+            // rollback & re-run di tutte le migrazioni
+            // x rebuildare il DB
         }
         // 10 Articoli
 
