@@ -49,6 +49,9 @@ Route::middleware('auth') // autenticazione
     ->group(function() {
 
         Route::get('/', 'HomeController@index')->name('home');
+        
+        // CRUD 7 rotte 
+        Route::resource('posts' , 'PostController');
 });
 
 // Rotte pubbliche

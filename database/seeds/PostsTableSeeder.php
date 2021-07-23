@@ -35,7 +35,7 @@ class PostsTableSeeder extends Seeder
             // Verificare il DB
 
             // php artisan migrate:refresh --seed
-            // rollback & re-run di tutte le migrazioni
+            // rollback & re-run di tutte le migrations
             // x rebuildare il DB
         }
         // 10 Articoli
