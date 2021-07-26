@@ -4,12 +4,23 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+// SLUG
+use Illuminate\Support\Str;
 // Metodo Post
 use App\Post;
 
 class PostController extends Controller
 {
+    private $postValidationArray = [
+        'title' => 'required|max:255',
+        'content' => 'required',
+    ];
+
+    // private function generateSlug() {
+
+    // }
+
+    
     /**
      * Display a listing of the resource.
      *
@@ -29,7 +40,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.posts.create');
     }
 
     /**
@@ -40,7 +51,47 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        /*
+        dd($data);
+        */
+
+        // VALIDAZIONE
+        $request->validate($this->postValidationArray);
+        // VALIDAZIONE
+        // @error in create.blade.php
+
+        //creazione e salvataggio
+        // nuova istanza di classe Post
+
+        $newPost = new Post();
+
+        //SLUG !use Illuminate\Support\Str;!
+        $slug = Str::slug($data['title'], '-');
+
+        $existingPost = Post::where('slug', $slug)->first();
+
+        $slugBase = $slug;
+        $counter = 1;
+
+        while($existingPost !=null) {
+            // blocco istruzioni
+            $slug = $slugBase . "-" . $counter;
+
+            //istruzioni terminare il ciclo
+            $existingPost = Post::where('slug', $slug)->first();
+            $counter++;
+        }
+
+        $data['slug'] = $slug;
+        //SLUG
+
+        $newPost->fill($data);
+        //aggiungere FILLABLE nel modello (Post)
+
+        $newPost->save();
+
+        return redirect()->route('admin.posts.show', $newPost->id);
     }
 
     /**
@@ -68,9 +119,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        return 'Modifica post ' . $id;
+        return view('admin.posts.edit', compact('post'));
     }
 
     /**
@@ -80,9 +131,39 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, /*$id*/ Post $post)
     {
-        //
+        $data = $request->all();
+        // dd($data);
+        // VALIDAZIONE (identica allo store)
+        $request->validate($this->postValidationArray);
+        // VALIDAZIONE
+
+        //SLUG
+        if($post->title != $data['title']) {
+            //CODICE COPIATO DA "Sopra"
+            $slug = Str::slug($data['title'], '-');
+
+            $existingPost = Post::where('slug', $slug)->first();
+
+            $slugBase = $slug;
+            $counter = 1;
+
+            while($existingPost !=null) {
+                // blocco istruzioni
+                $slug = $slugBase . "-" . $counter;
+
+                //istruzioni terminare il ciclo
+                $existingPost = Post::where('slug', $slug)->first();
+                $counter++;
+            }
+            //CODICE COPIATO DA "Sopra"
+            $data['slug'] = $slug;
+        }
+        //SLUG
+        $post->update($data);
+
+        return redirect()->route('admin.posts.show', $post->id);
     }
 
     /**
@@ -91,8 +172,12 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        $post->delete();
+
+        return redirect()
+        ->route('admin.posts.index')
+        ->with('deleted', $post->title);
     }
 }
