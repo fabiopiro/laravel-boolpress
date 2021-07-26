@@ -55,4 +55,16 @@ Route::middleware('auth') // autenticazione
 });
 
 // Rotte pubbliche
-Route::get('/', 'HomeController@index')->name('home');
+
+// pre Rotta di Fallback
+// Route::get('/', 'HomeController@index')->name('home');
+
+// Rotta di Fallback
+
+// --- v.1 - Rotta di Fallback
+// Route::get('{any?}', function () {
+//     return view ('guest.home');
+// })->where('any', '.*')->name('home');
+
+// --- v.2 (con il controller)
+Route::get('{any?}', 'HomeController@index')->where('any', '.*')->name('home');

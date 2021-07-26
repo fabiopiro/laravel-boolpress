@@ -49,9 +49,17 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+
+    // v.1 public function show($id)
+    /* v.2 */ public function show(Post $post)
     {
-        //
+        /* v.1
+        $post = Post::findOrFail($id);
+        return view('admin.posts.show', compact('post'));
+        */
+        /* v.2 */ return view('admin.posts.show', compact('post'));
+
+        /* ...views/admin/posts creo 'show.blade.php' */
     }
 
     /**
@@ -62,7 +70,7 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        return 'Modifica post ' . $id;
     }
 
     /**
