@@ -49,7 +49,7 @@
                     @foreach ($categories as $category)
                         <option value="{{$category->id}}"
                             {{-- Old Ternario --}}
-                            {{ ($category->id == old('category_id')) ? 'selected' : '' }}>
+                            {{ ($category->id == old('category_id', $post->category_id)) ? 'selected' : '' }}>
                             {{-- Old Ternario --}}
                             {{$category->name}}
                         </option>

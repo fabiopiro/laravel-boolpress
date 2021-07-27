@@ -52,6 +52,9 @@ Route::middleware('auth') // autenticazione
         
         // CRUD 7 rotte 
         Route::resource('posts' , 'PostController');
+
+        // Categories
+        Route::get('/categories/{category}', 'CategoryController@show')->name('categories.show');
 });
 
 // Rotte pubbliche

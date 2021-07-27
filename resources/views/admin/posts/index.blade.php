@@ -28,6 +28,13 @@
                         <td>{{ $item->id }}</td>
                         <td>{{ $item->title }}</td>
                         <td>{{ $item->slug }}</td>
+                        {{-- Category --}}
+                        <td>
+                            @if ($item->category != null)
+                                {{ $item->category->name }}
+                            @endif
+                        </td>
+                        {{-- Category --}}
                         <td>
                             {{-- SHOW --}}
                             {{-- tag <a>! il metodo è GET! --}}

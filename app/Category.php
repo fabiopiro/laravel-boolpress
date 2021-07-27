@@ -10,7 +10,7 @@ class Category extends Model
 
     // Relazioni
     // Una categoria (1) ha tanti post (*)
-    // posts -categories
+    // categories - posts
     public function posts() {
         return $this->hasMany('App\Post');
         // 1 Category hasMany(ha tanti) post
