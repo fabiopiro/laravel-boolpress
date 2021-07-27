@@ -8,19 +8,23 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 // Metodo Post
 use App\Post;
+// Metodo Category
+use App\Category;
 
 class PostController extends Controller
 {
     private $postValidationArray = [
         'title' => 'required|max:255',
         'content' => 'required',
+        'category_id' => 'nullable|exists:categories,id',
+        // exists - check if exists
     ];
 
     // private function generateSlug() {
 
     // }
 
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -39,8 +43,12 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view('admin.posts.create');
+    {   
+        // importo il MODEL Category - query all() - salvo $categories
+        $categories = Category::all(); // use\App\Category
+
+        // compact - passo categories alla vista
+        return view('admin.posts.create', compact('categories'));
     }
 
     /**
@@ -121,7 +129,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('admin.posts.edit', compact('post'));
+        // COME NELLA CREATE
+        $categories = Category::all();
+        return view('admin.posts.edit', compact('post', 'categories'));
     }
 
     /**

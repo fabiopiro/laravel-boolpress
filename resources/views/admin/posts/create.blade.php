@@ -30,16 +30,44 @@
             <div class="form-group">
                 <label for="content">Content</label>
                 <textarea type="text" class="form-control
-                @error('title')
+                @error('content')
                     is-invalid
                 @enderror"
-                id="content" rows="6" name="content">
-                    {{ old('content') }}
-                </textarea>
-                @error('title')
+                id="content" rows="6" name="content">{{ old('content') }}</textarea>
+                @error('content')
                     <small class="text-danger">{{ $message }}</small>   
                 @enderror
             </div>
+
+            {{-- Category --}}
+            <div class="form-group">
+                <label for="category_id">Category</label>
+                <select class="form-control
+                @error('category_id')
+                    is-invalid
+                @enderror"
+                name="category_id" id="category_id">
+                        <option value="">
+                            -Seleziona una categoria-
+                        </option>
+                        {{-- !devo recuperare le categorie! --}}
+                        {{-- !PostController - create() ! --}}
+                        {{--  --}}
+                    @foreach ($categories as $category)
+                        <option value="{{$category->id}}"
+                            {{-- Old Ternario --}}
+                            {{ ($category->id == old('category_id')) ? 'selected' : '' }}>
+                            {{-- Old Ternario --}}
+                            {{$category->name}}
+                        </option>
+                    @endforeach
+                </select>
+                @error('category_id')
+                    <small class="text-danger">{{ $message }}</small>
+                @enderror
+            </div>
+            {{-- Category --}}
+
             <button type="submit" class="btn btn-primary">Create</button>
             <a href="{{ route('admin.posts.index') }}">Posts Index</a>
         </form>
