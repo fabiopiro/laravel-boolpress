@@ -23,4 +23,11 @@ class Post extends Model
         return $this->belongsTo('App\Category');
         // 1 Post belongTo (Appartiene) a 1 categoria
     }
+
+    // Relazione - Many to Many
+    // posts - tags
+    public function tags() {
+        return $this->belongsToMany('App\Tag');
+    }
+    
 }

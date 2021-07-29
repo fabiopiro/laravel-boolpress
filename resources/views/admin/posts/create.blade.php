@@ -68,6 +68,34 @@
             </div>
             {{-- Category --}}
 
+            {{-- Tag --}}
+            <div class="form-group mb-5">
+                <h5>Tags</h5>
+                @foreach ($tags as $tag)
+                    <div class="form-check form-check-inline">
+                        <input type="checkbox" class="form-check-input"
+                        name="tags[]"
+                        id="tag-{{ $tag->id }}"
+                        value="{{ $tag->id }}"
+                        {{ in_array($tag->id, old('tags', [])) ? 'checked' : ''}}
+                        >
+
+                        <label class="form-check-label" for="tag-{{ $tag->id }}">
+                            {{ $tag->name }}
+                        </label>
+                    </div>
+                @endforeach
+                @error('tags')
+                    <div>
+                        <small class="text-danger">
+                            {{ $message }}
+                        </small>
+                    </div>
+                @enderror
+            </div>
+            {{-- /Tag --}}
+
+
             <button type="submit" class="btn btn-primary">Create</button>
             <a href="{{ route('admin.posts.index') }}">Posts Index</a>
         </form>

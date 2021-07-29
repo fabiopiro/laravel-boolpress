@@ -10,6 +10,8 @@ use Illuminate\Support\Str;
 use App\Post;
 // Metodo Category
 use App\Category;
+// Tag
+use App\Tag;
 
 class PostController extends Controller
 {
@@ -17,6 +19,9 @@ class PostController extends Controller
         'title' => 'required|max:255',
         'content' => 'required',
         'category_id' => 'nullable|exists:categories,id',
+
+
+        'tags' => 'exists:tags,id', // exists:nome_tabella,nome_campo/colonna
         // exists - check if exists
     ];
 
@@ -46,9 +51,13 @@ class PostController extends Controller
     {   
         // importo il MODEL Category - query all() - salvo $categories
         $categories = Category::all(); // use\App\Category
+        
+        // Many to Many
+        // posts - tags
+        $tags = Tag::all(); // !use App\Tag;! e compact
 
         // compact - passo categories alla vista
-        return view('admin.posts.create', compact('categories'));
+        return view('admin.posts.create', compact('categories', 'tags'));
     }
 
     /**
@@ -98,6 +107,13 @@ class PostController extends Controller
         //aggiungere FILLABLE nel modello (Post)
 
         $newPost->save();
+
+        // Tag
+        // se tags(checkbox) esiste -> fai l'attach
+        if (array_key_exists('tags', $data)) {
+            $newPost->tags()->attach($data['tags']);
+        }
+
 
         return redirect()->route('admin.posts.show', $newPost->id);
     }
