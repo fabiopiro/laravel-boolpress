@@ -60,6 +60,43 @@
                 @enderror
             </div>
             {{-- Category --}}
+
+            {{-- Tag --}}
+            {{-- @dump($post->tags) --}}
+            <div class="form-group mb-5">
+                <h5>Tags</h5>
+                @foreach ($tags as $tag)
+                    <div class="form-check form-check-inline">
+                        @if ($errors->any())
+                            <input type="checkbox" class="form-check-input"
+                            name="tags[]"
+                            id="tag-{{ $tag->id }}"
+                            value="{{ $tag->id }}"
+                            {{ in_array($tag->id, old('tags', [])) ? 'checked' : ''}}
+                            >                        
+                        @else
+                            <input type="checkbox" class="form-check-input"
+                            name="tags[]"
+                            id="tag-{{ $tag->id }}"
+                            value="{{ $tag->id }}"
+                            {{ $post->tags->contains($tag->id) ? 'checked' : ''}}
+                            >   
+                        @endif
+
+                        <label class="form-check-label" for="tag-{{ $tag->id }}">
+                            {{ $tag->name }}
+                        </label>
+                    </div>
+                @endforeach
+                @error('tags')
+                    <div>
+                        <small class="text-danger">
+                            {{ $message }}
+                        </small>
+                    </div>
+                @enderror
+            </div>
+            {{-- /Tag --}}
             <button type="submit" class="btn btn-primary">Edit</button>
             <a href="{{ route('admin.posts.index') }}">Posts Index</a>
         </form>

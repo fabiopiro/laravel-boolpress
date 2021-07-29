@@ -147,7 +147,8 @@ class PostController extends Controller
     {
         // COME NELLA CREATE
         $categories = Category::all();
-        return view('admin.posts.edit', compact('post', 'categories'));
+        $tags = Tag::all();
+        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -189,6 +190,13 @@ class PostController extends Controller
         //SLUG
         $post->update($data);
 
+        // Tag
+        if (array_key_exists('tags', $data)) {
+            $post->tags()->sync($data['tags']);
+        } else { // gestisco il caso in cui io faccia uncheck di tutto
+            $post->tags()->detach(); // detach() senza niente tra parentesi "stacca tutto"
+        }
+        
         return redirect()->route('admin.posts.show', $post->id);
     }
 

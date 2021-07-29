@@ -25,6 +25,22 @@
         <a class="btn btn-primary" href="{{ route('admin.posts.edit', $post->id) }}">Modifica</a>
         <a href=""></a>
         <small>{{ $post->slug }}</small>
+
+        {{-- tag --}}
+        @if (count($post->tags) > 0)
+            <div class="mt-3 h4">
+                @foreach ($post->tags as $tag)
+                    <span class="badge badge-pill badge-dark">
+                        {{  $tag->name }}
+                    </span>
+                @endforeach
+            </div>
+        @else
+            <h5>Nessun Tag!!!</h5>
+        @endif
+        {{-- tag --}}
+
+
         <div class="mt-4">
             {{ $post->content }}
         </div>
