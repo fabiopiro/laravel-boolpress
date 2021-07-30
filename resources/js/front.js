@@ -15,6 +15,10 @@
 // import Vue
 window.Vue = require('vue');
 
+// Axios (copiato da bootstrap.js)
+window.axios = require('axios');
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
 // [1] --- --- ---
 
 // import App
