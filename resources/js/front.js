@@ -24,11 +24,16 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 // import App
 import App from './App.vue';
 
+// impor Router
+import router from './router';
+
 // creo istanza di Vue
 const app = new Vue(
     {
         el:'#root',
-        render: h => h(App)
+        render: h => h(App),
+        // router
+        router: router
     }
 );
 // [1] --- --- ---
