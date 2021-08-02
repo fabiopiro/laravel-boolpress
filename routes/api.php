@@ -24,4 +24,8 @@ Route::namespace('Api')
 
     Route::get('posts', 'PostController@index');
     // php artisan route:list
+
+    // Router...
+    Route::get('posts/{slug}', 'PostController@show');
+
 });

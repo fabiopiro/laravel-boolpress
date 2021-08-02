@@ -32,6 +32,23 @@ export default {
 }
 </script>
 
-<style>
-    
+<style lang="scss">
+
+    /* ACTIVE - option 1)
+    a {
+      &.router-link-exact-active {
+        background-color: lightblue;
+      }
+    }
+    */
+
+    /* ACTIVE - option 2)
+    ...in router.js - linkExactActiveClass: 'active',
+    */
+    a {
+      &.active {
+        background-color: lightblue;
+      }
+    }
+
 </style>

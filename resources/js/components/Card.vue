@@ -5,7 +5,9 @@
               <div class="card-body">
                 <h3>{{ item.title }}</h3>
                 <p>{{ item.excerpt }}</p>
-                <a href="#" class="card-link">Leggi</a>
+                <!-- <a href="" class="card-link">Leggi</a> -->
+
+                <router-link :to="{ name: 'single-post', params: { slug:item.slug } }">Leggi</router-link>
               </div>
             </div>
         </div>
